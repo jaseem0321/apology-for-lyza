@@ -96,14 +96,14 @@
     <p>
       I just wanted to create this small page for you.<br>
       It's my way of apologizing properly for how I acted earlier today.<br>
-      I know I raised my voice, and I'm really sorry for that, it wasn’t cool and i didn't mean it po.
-      I felt pressured on that time, So that't why. <br>
-      You're my friend, and I appreciate you. I hope we’re okay
+      I know I raised my voice, and I'm really sorry for that, it wasn’t cool and I didn't mean it po.
+      I felt pressured at that time, so that’s why. <br>
+      You're my friend, and I appreciate you. I hope we’re okay.
     </p>
 
     <div class="button-container">
       <button id="yesBtn">Goods nata? </button>
-      <button id="noBtn">Nope </button>
+      <button id="noBtn">Nope</button>
     </div>
 
     <div id="thankYou">WOWW! Thank you, dae! I’ll be better next time promise. </div>
@@ -111,15 +111,15 @@
 
   <script>
     function showWelcomeMessage() {
-      alert("Hii Lyza \n\nI just wanted to create this for you.\nThis is my way of apologizing for raising my voice earlier.\nI didn’t mean it, and I’m sincerely sorry.\n\nPlease take a look ");
+      alert("Hii Lyza \n\nI just wanted to create this for you.\nThis is my way of apologizing for raising my voice earlier.\nI didn’t mean it, and I’m sincerely sorry.\n\nPlease take a look 🥺");
     }
 
     const noBtn = document.getElementById('noBtn');
     const yesBtn = document.getElementById('yesBtn');
     const thankYou = document.getElementById('thankYou');
+    const container = document.querySelector('.button-container');
 
-    noBtn.addEventListener('mouseenter', () => {
-      const container = document.querySelector('.button-container');
+    function moveNoBtn() {
       const maxX = container.offsetWidth - noBtn.offsetWidth;
       const maxY = container.offsetHeight - noBtn.offsetHeight;
 
@@ -128,6 +128,13 @@
 
       noBtn.style.left = `${randomX}px`;
       noBtn.style.top = `${randomY}px`;
+    }
+
+    // Move on desktop (hover) and mobile (touch)
+    noBtn.addEventListener('mouseenter', moveNoBtn);
+    noBtn.addEventListener('touchstart', function (e) {
+      e.preventDefault(); // Prevent accidental tap
+      moveNoBtn();
     });
 
     yesBtn.addEventListener('click', () => {
