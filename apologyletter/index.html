@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hi Lyza! 🙈</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #c8e6c9);
+      overflow: hidden;
+      height: 100%;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #00796b;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #333;
+      font-size: 1.2rem;
+      max-width: 500px;
+      margin: 0 20px 30px;
+    }
+
+    .button-container {
+      position: relative;
+      height: 150px;
+    }
+
+    button {
+      padding: 14px 24px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: 0.2s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    #yesBtn {
+      background-color: #4CAF50;
+      color: white;
+      margin-right: 20px;
+    }
+
+    #noBtn {
+      background-color: #f44336;
+      color: white;
+      position: absolute;
+    }
+
+    #thankYou {
+      display: none;
+      font-size: 1.6rem;
+      margin-top: 30px;
+      color: #00796b;
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 2rem; }
+      p { font-size: 1rem; }
+      button { font-size: 1rem; }
+    }
+  </style>
+</head>
+<body onload="showWelcomeMessage()">
+
+  <canvas id="confettiCanvas"></canvas>
+
+  <div class="content">
+    <h1>Hi Lyza Dimen</h1>
+    <p>
+      I just wanted to create this small page for you.<br>
+      It's my way of apologizing properly for how I acted earlier today.<br>
+      I know I raised my voice, and I'm really sorry for that, it wasn’t cool and i didn't mean it po.
+      I felt pressured on that time, So that't why. <br>
+      You're my friend, and I appreciate you. I hope we’re okay
+    </p>
+
+    <div class="button-container">
+      <button id="yesBtn">Goods nata? </button>
+      <button id="noBtn">Nope </button>
+    </div>
+
+    <div id="thankYou">WOWW! Thank you, dae! I’ll be better next time promise. </div>
+  </div>
+
+  <script>
+    function showWelcomeMessage() {
+      alert("Hii Lyza \n\nI just wanted to create this for you.\nThis is my way of apologizing for raising my voice earlier.\nI didn’t mean it, and I’m sincerely sorry.\n\nPlease take a look ");
+    }
+
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const thankYou = document.getElementById('thankYou');
+
+    noBtn.addEventListener('mouseenter', () => {
+      const container = document.querySelector('.button-container');
+      const maxX = container.offsetWidth - noBtn.offsetWidth;
+      const maxY = container.offsetHeight - noBtn.offsetHeight;
+
+      const randomX = Math.random() * maxX;
+      const randomY = Math.random() * maxY;
+
+      noBtn.style.left = `${randomX}px`;
+      noBtn.style.top = `${randomY}px`;
+    });
+
+    yesBtn.addEventListener('click', () => {
+      thankYou.style.display = 'block';
+      document.querySelector('.button-container').style.display = 'none';
+    });
+
+    // Friendly Confetti Background
+    const canvas = document.getElementById('confettiCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+
+    const confetti = [];
+
+    for (let i = 0; i < 100; i++) {
+      confetti.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        r: Math.random() * 6 + 2,
+        d: Math.random() * 1 + 1,
+        color: `hsl(${Math.random() * 360}, 70%, 60%)`,
+        tilt: Math.random() * 10 - 5
+      });
+    }
+
+    function drawConfetti() {
+      ctx.clearRect(0, 0, width, height);
+      confetti.forEach(c => {
+        ctx.beginPath();
+        ctx.fillStyle = c.color;
+        ctx.ellipse(c.x, c.y, c.r, c.r / 2, c.tilt, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      updateConfetti();
+      requestAnimationFrame(drawConfetti);
+    }
+
+    function updateConfetti() {
+      confetti.forEach(c => {
+        c.y += c.d;
+        c.x += Math.sin(c.y * 0.01);
+        if (c.y > height) {
+          c.y = -10;
+          c.x = Math.random() * width;
+        }
+      });
+    }
+
+    window.addEventListener('resize', () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+    });
+
+    drawConfetti();
+  </script>
+</body>
+</html>
